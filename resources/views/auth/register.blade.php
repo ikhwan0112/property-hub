@@ -25,6 +25,20 @@
                             </div>
                         </div>
 
+                        {{-- <div class="form-group row">
+                            <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('Picture') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="picture" type="file" class="{{ $errors->has('picture') ? ' is-invalid' : '' }}" name="picture" value="{{ old('picture') }}" required autofocus>
+
+                                @if ($errors->has('picture'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('picture') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> --}}
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -34,6 +48,20 @@
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phone_no" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone_no" type="text" class="form-control{{ $errors->has('phone_no') ? ' is-invalid' : '' }}" name="phone_no" value="{{ old('phone_no') }}" required>
+
+                                @if ($errors->has('phone_no'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone_no') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -60,6 +88,8 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+
+                        <input type="hidden" id="roleId" name="roleId" value=2>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

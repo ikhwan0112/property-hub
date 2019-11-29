@@ -19,6 +19,8 @@ class CreatePropertiesTable extends Migration
             $table->longText('description');
             $table->string('address', 255);
             $table->double('price');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('detail_id')->unsigned();
             $table->foreign('detail_id')->references('id')->on('details')->onDelete('cascade');
             $table->timestamps();

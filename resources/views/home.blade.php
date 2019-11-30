@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+@include('layouts/app')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -15,9 +13,10 @@
                     @endif
 
                     You are logged in!
+                    <br>
+                    <a href="{{ url('/listhouse') }}">List of Houses</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection

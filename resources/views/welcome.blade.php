@@ -7,7 +7,7 @@
     <title>PropertyHub</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -76,28 +76,79 @@
         height: 100vh;
         width: 100%;
     }
+    
+    /* .lower-img{
 
-    .lower-img{
-        background-image: url({{ asset('images/footer-bg.jpg') }});
-    }
-</style>
+    } */
+    </style>
+
 </head>
 <body>
     <div class="flex-center position-ref full-height upper-img">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">Login</a>
+        
+        <!-- Header section -->
+        <header class="header-section">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 header-top-left">
+                            <div class="top-info">
+                                <i class="fa fa-phone"></i>
+                                (+88) 666 121 4321
+                            </div>
+                            <div class="top-info">
+                                <i class="fa fa-envelope"></i>
+                                info.leramiz@colorlib.com
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-lg-right header-top-right">
+                            <div class="top-social">
+                                <a href=""><i class="fa fa-facebook"></i></a>
+                                <a href=""><i class="fa fa-twitter"></i></a>
+                                <a href=""><i class="fa fa-instagram"></i></a>
+                                <a href=""><i class="fa fa-pinterest"></i></a>
+                                <a href=""><i class="fa fa-linkedin"></i></a>
+                            </div>
+                            @if (Route::has('login'))
+                            <div class="user-panel">
+                                @auth
+                                <a href="{{ url('/home') }}"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+                                @else
+                                <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a>
 
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}">Register</a>
-            @endif
-            @endauth
-        </div>
-
-        @endif
+                                @if (Route::has('register'))
+                                <a href=""><i class="fa fa-user-circle-o"></i> Register</a>
+                                @endif
+                                @endauth
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="site-navbar">
+                            {{-- <a href="#" class="site-logo"><img src="img/logo.png" alt=""></a>  --}}
+                            <a href="#" class="site-logo">PropertyHub</a>
+                            <div class="nav-switch">
+                                <i class="fa fa-bars"></i>
+                            </div>
+                            <ul class="main-menu">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="categories.html">FEATURED LISTING</a></li>
+                                <li><a href="about.html">ABOUT US</a></li>
+                                <li><a href="single-list.html">Pages</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header section end -->
 
         <!-- Hero section -->
         <section class="hero-section set-bg">
@@ -245,50 +296,6 @@
     </section>
     <!-- feature section end -->
 
-        <!-- Footer section -->
-    <footer class="footer-section set-bg lower-img">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 footer-widget">
-                    <img src="img/logo.png" alt="">
-                    <p>Lorem ipsum dolo sit azmet, consecter dipise consult  elit. Maecenas mamus antesme non anean a dolor sample tempor nuncest erat.</p>
-                    <div class="social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-12 footer-widget">
-                    <div class="contact-widget">
-                        <h5 class="fw-title">CONTACT US</h5>
-                        <p><i class="fa fa-map-marker"></i>3711-2880 Nulla St, Mankato, Mississippi </p>
-                        <p><i class="fa fa-phone"></i>(+88) 666 121 4321</p>
-                        <p><i class="fa fa-envelope"></i>info.leramiz@colorlib.com</p>
-                        <p><i class="fa fa-clock-o"></i>Mon - Sat, 08 AM - 06 PM</p>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="footer-nav">
-                    <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Featured Listing</a></li>
-                        <li><a href="">About us</a></li>
-                        <li><a href="">Pages</a></li>
-                        <li><a href="">Blog</a></li>
-                        <li><a href="">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="copyright">
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer section end -->
+    @include('footer')
 </body>
 </html>

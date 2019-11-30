@@ -14,7 +14,15 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin/add_admin');
+    }
+
+    public function list(){
+        return view('admin/list_house');
+    }
+
+    public function report(){
+        return view('admin/view_report');
     }
 
     /**
@@ -24,7 +32,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

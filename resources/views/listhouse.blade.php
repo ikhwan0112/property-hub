@@ -90,12 +90,12 @@
 							<i class="fa fa-bars"></i>
 						</div>
 						<ul class="main-menu">
-							<li><a href="index.html">Home</a></li>
-							<li><a href="categories.html">FEATURED LISTING</a></li>
-							<li><a href="about.html">ABOUT US</a></li>
-							<li><a href="single-list.html">Pages</a></li>
-							<li><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="{{ url('/') }}">Home</a></li>
+							<li><a href="{{ url('/listhouse') }}">FEATURED LISTING</a></li>
+							<li><a href="">ABOUT US</a></li>
+							<li><a href="{{ url('/singlehouse') }}">Pages</a></li>
+							<li><a href="">Blog</a></li>
+							<li><a href="">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -106,7 +106,7 @@
 
 
 	<!-- Page top section -->
-	<section class="page-top-section set-bg top-img-bg" data-setbg="img/page-top-bg.jpg">
+	<section class="page-top-section set-bg top-img-bg">
 		<div class="container text-white">
 			<h2>Featured Listings</h2>
 		</div>

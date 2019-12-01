@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -14,7 +15,19 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+
+    }
+
+    public function add(){
+        return view('admin/add_admin');
+    }
+
+    public function list(){
+        return view('admin/list_house');
+    }
+
+    public function report(){
+        return view('admin/view_report');
     }
 
     /**
@@ -24,7 +37,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -81,5 +94,14 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function is_admin()
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('id', $id)->get();
+
+        return view('welcome', compact('user'));
+        
     }
 }

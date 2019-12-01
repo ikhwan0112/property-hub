@@ -24,36 +24,29 @@
         height: 100vh;
         margin: 0;
     }
-
     .full-height {
         height: 50vh;
     }
-
     .flex-center {
         align-items: center;
         display: flex;
         justify-content: center;
     }
-
     .position-ref {
         position: relative;
         margin-bottom: -54px;
     }
-
     .top-right {
         position: absolute;
         right: 10px;
         top: 18px;
     }
-
     .content {
         text-align: center;
     }
-
     .title {
         font-size: 84px;
     }
-
     .links > a {
         color: #636b6f;
         padding: 0 25px;
@@ -63,11 +56,9 @@
         text-decoration: none;
         text-transform: uppercase;
     }
-
     .m-b-md {
         margin-bottom: 30px;
     }
-
     .upper-img{
         background-image: url({{ asset('images/bg.jpg') }});
         background-position: center center;
@@ -78,7 +69,6 @@
     }
     
     /* .lower-img{
-
     } */
     </style>
 
@@ -112,12 +102,20 @@
                             @if (Route::has('login'))
                             <div class="user-panel">
                                 @auth
-                                <a href="{{ url('/home') }}"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+                                
+                                @foreach ($user as $role)
+                                @if ($role->is_admin == 1)
+                                <a href="{{ url('/admin/add_admin') }}"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+                                @else
+                                    <a href="{{ url('/home') }}"><i class="fa fa-user-circle-o"></i>Dashboard</a>
+                                @endif
+                                @endforeach
+
                                 @else
                                 <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a>
 
                                 @if (Route::has('register'))
-                                <a href=""><i class="fa fa-user-circle-o"></i> Register</a>
+                                <a href="{{ route('register') }}"><i class="fa fa-user-circle-o"></i> Register</a>
                                 @endif
                                 @endauth
                             </div>
@@ -136,12 +134,12 @@
                                 <i class="fa fa-bars"></i>
                             </div>
                             <ul class="main-menu">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="categories.html">FEATURED LISTING</a></li>
-                                <li><a href="about.html">ABOUT US</a></li>
-                                <li><a href="single-list.html">Pages</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ url('/') }}">Home</a></li>
+                                <li><a href="{{ url('/listhouse') }}">FEATURED LISTING</a></li>
+                                <li><a href="">ABOUT US</a></li>
+                                <li><a href="{{ url('/singlehouse') }}">Pages</a></li>
+                                <li><a href="">Blog</a></li>
+                                <li><a href="">Contact</a></li>
                             </ul>
                         </div>
                     </div>

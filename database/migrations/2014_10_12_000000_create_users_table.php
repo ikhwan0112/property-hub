@@ -20,10 +20,9 @@ class CreateUsersTable extends Migration
                 $table->binary('picture')->nullable();
                 $table->string('email')->unique();
                 $table->string('phone_no');
+                $table->boolean('is_admin')->default(0);
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('password');
-                $table->integer('role_id')->unsigned();
-                $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
                 $table->rememberToken();
                 $table->timestamps();
             });

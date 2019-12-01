@@ -14,7 +14,7 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        //
+        return view('listhouse');
     }
 
     /**
@@ -46,7 +46,7 @@ class PropertiesController extends Controller
      */
     public function show(Property $property)
     {
-        //
+        return view('singlehouse');
     }
 
     /**

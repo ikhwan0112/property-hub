@@ -14,8 +14,9 @@ class DetailsController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $details = detail::latest()->paginate(5);
+        return view('detail.index',compact('details'))
+        ->with('i',(request()->input('page,1')-1)*5);    }
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +25,7 @@ class DetailsController extends Controller
      */
     public function create()
     {
-        //
+        return view('detail.create');
     }
 
     /**
@@ -35,7 +36,18 @@ class DetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate
+        ([
+            'area' => 'required',
+            'bedroom' => 'required',
+            'bathroom' => 'required'
+            'facility' => 'required'
+            'type' => 'required'
+        ]);
+
+        detail::create($request->all());
+        return redirect()->route('property.index')
+                         ->with('success','new details successfuly addded');
     }
 
     /**

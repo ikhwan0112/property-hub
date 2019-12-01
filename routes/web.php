@@ -25,7 +25,7 @@ Route::get('/listhouse', 'PropertiesController@index');
 Route::get('/welcome', 'UsersController@is_admin');
 // Route::resource('details', 'DetailsController');
 // Route::resource('roles', 'RolesController');
-// Route::resource('properties', 'PropertiesController');
+ Route::resource('properties', 'PropertiesController');
 // Route::resource('reports', 'ReportsController');
 Route::get('admin/add_admin', 'UsersController@add');
 Route::get('admin/list_house', 'UsersController@list');

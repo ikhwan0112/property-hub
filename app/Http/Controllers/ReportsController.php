@@ -24,7 +24,7 @@ class ReportsController extends Controller
      */
     public function create()
     {
-        //
+        return view('user/user_report');
     }
 
     /**

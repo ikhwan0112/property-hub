@@ -24,7 +24,7 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        //
+        return view('user/add_property');
     }
 
     /**

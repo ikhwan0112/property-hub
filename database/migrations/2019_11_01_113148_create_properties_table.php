@@ -15,10 +15,13 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->increments('id');
-            $table->binary('picture');
+            $table->longText('picture');
             $table->longText('description');
             $table->string('address', 255);
             $table->double('price');
+            $table->string('status');
+            $table->double('lng'); //longitud
+            $table->double('lat');  //latitud
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('detail_id')->unsigned();

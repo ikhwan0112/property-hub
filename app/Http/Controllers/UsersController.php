@@ -22,8 +22,8 @@ class UsersController extends Controller
         return view('admin/add_admin');
     }
 
-    public function list(){
-        return view('admin/list_house');
+    public function indexAdmin(){
+        return view('admin.create');
     }
 
     public function report(){

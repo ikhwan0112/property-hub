@@ -22,7 +22,11 @@ function initialize() {
 
         const map = new google.maps.Map(document.getElementById(fieldKey + '-map'), {
             center: {lat: latitude, lng: longitude},
+<<<<<<< Updated upstream
             zoom: 13
+=======
+            zoom: 15
+>>>>>>> Stashed changes
         });
         const marker = new google.maps.Marker({
             map: map,

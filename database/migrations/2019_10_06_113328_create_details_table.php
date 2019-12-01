@@ -20,6 +20,8 @@ class CreateDetailsTable extends Migration
             $table->integer('bathroom');
             $table->string('facility', 100);
             $table->string('type');
+            $table->integer('property_id')->unsigned();
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->timestamps();
         });
     }

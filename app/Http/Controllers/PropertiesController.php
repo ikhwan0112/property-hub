@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Property;
+use Auth;
 use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
@@ -40,6 +41,7 @@ class PropertiesController extends Controller
         $request->validate
         ([
             'description' => 'required',
+<<<<<<< Updated upstream
             'address' => 'required',
             'price' => 'required'
         ]);
@@ -47,6 +49,29 @@ class PropertiesController extends Controller
         property::create($request->all());
         return redirect()->route('property.index')
                          ->with('success','new properties successfuly addded');
+=======
+            'address' => 'optional',
+            'price' => 'required'
+        ]);
+
+        if(Auth::check()){
+            $property = Property::create([
+                'picture' => $request->input('pic'),
+                'description' => $request->input('description'),
+                'address' => $request->input('address_address'),
+                'price' => $request->input('price'),
+                'status' => "Available",
+                'lng' => $request->input('address_longitude'),
+                'lat' => $request->input('address_latitude'),
+                'user_id' => Auth::id()
+            ]);
+
+            if($property){
+                return  redirect()->route('property.index')->with('success','new properties successfuly addded');
+            }
+        }
+        
+>>>>>>> Stashed changes
     }
 
     /**
@@ -57,7 +82,11 @@ class PropertiesController extends Controller
      */
     public function show(Property $property)
     {
+<<<<<<< Updated upstream
         //
+=======
+        return view('user/add_property');
+>>>>>>> Stashed changes
     }
 
     /**

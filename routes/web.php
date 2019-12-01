@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/singlehouse', 'PropertiesController@show');
 Route::get('/listhouse', 'PropertiesController@index');
 Route::get('/welcome', 'UsersController@is_admin');
+<<<<<<< Updated upstream
 // Route::resource('details', 'DetailsController');
 // Route::resource('roles', 'RolesController');
  Route::resource('properties', 'PropertiesController');
@@ -30,3 +31,21 @@ Route::get('/welcome', 'UsersController@is_admin');
 Route::get('admin/add_admin', 'UsersController@add');
 Route::get('admin/list_house', 'UsersController@list');
 Route::get('admin/view_report', 'UsersController@report');
+=======
+
+Route::get('admin/add_admin', 'UsersController@indexAdmin');
+Route::get('admin/list_house', 'UsersController@list');
+Route::get('admin/view_report', 'UsersController@report');
+
+Route::get('user/index', 'PropertiesController@index');
+Route::get('user/add_property', 'PropertiesController@show');
+Route::get('user/user_report', 'PropertiesController@create');
+
+
+
+
+Route::resource('users', 'UsersController');
+// Route::resource('roles', 'RolesController');
+Route::resource('properties', 'PropertiesController');
+// Route::resource('reports', 'ReportsController');
+>>>>>>> Stashed changes

@@ -18,8 +18,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('details', 'DetailsController');
-Route::resource('roles', 'RolesController');
-Route::resource('properties', 'PropertiesController');
-Route::resource('reports', 'ReportsController');
-Route::resource('users', 'UsersController');
+// Route::resource('details', 'DetailsController');
+// Route::resource('roles', 'RolesController');
+// Route::resource('properties', 'PropertiesController');
+// Route::resource('reports', 'ReportsController');
+// Route::resource('users', 'UsersController');
+Route::get('user/user-index', 'UsersController@index');
+Route::get('user/add-property', 'UsersController@add');
+Route::get('user/user-report', 'UsersController@report');
+Route::post('insert','UsersController@store');
+Route::post('user/user-report','UsersController@insertreport');

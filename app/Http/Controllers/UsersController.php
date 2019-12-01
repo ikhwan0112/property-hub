@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
@@ -14,7 +17,15 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return view('user/user-index');
+    }
+
+    public function report(){
+        return view('user/user-report');
+    }
+
+    public function add(){
+        return view('user/add-property');
     }
 
     /**
@@ -35,9 +46,27 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $img = $request->file('picture');
+$desc = $request->input('description');
+$address = $request->input('address');
+$price = $request->input('price');
+
+$data=array('picture'=>$img,"description"=>$desc,"address"=>$address,"price"=>$price,'user_id'=>auth()->id(),'detail_id'=>auth()->id());
+DB::table('properties')->insert($data);
+echo "Record inserted successfully.<br/>";
+echo '<a href = "/insert">Click Here</a> to go back.';
     }
 
+public function insertreport(Request $request)
+{
+    protected $fillable = ['description','user_id'];
+    $report=$request->validate('description');
+    DB::table('reports')->insert(['description'=>$report,'user_id'=>auth()->id()]);
+    echo "Record inserted successfully.<br/>";
+    echo '<a href = "/insert">Click Here</a> to go back.';
+
+}
     /**
      * Display the specified resource.
      *

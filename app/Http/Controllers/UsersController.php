@@ -15,19 +15,16 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('user/user_index');
-    }
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('id', $id)->get();
 
-    public function add(){
-        return view('admin/add_admin');
-    }
-
-    public function list(){
-        return view('admin/list_house');
-    }
-
-    public function report(){
-        return view('admin/view_report');
+        foreach($user as $role){
+            if($role->is_admin == 'admin'){
+                return view('admin.index');
+            }else{
+                return view('user.index');
+            }
+        }
     }
 
     /**
@@ -37,7 +34,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.create');
     }
 
     /**

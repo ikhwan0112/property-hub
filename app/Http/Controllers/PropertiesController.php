@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Property;
+use Auth;
 use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
@@ -14,7 +15,9 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        return view('listhouse');
+        $properties = property::latest()->paginate(5);
+        return view('property.index',compact('properties'))
+        ->with('i',(request()->input('page,1')-1)*5);
     }
 
     /**
@@ -24,7 +27,7 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        return view('user/add_property');
+        return view('property.create');
     }
 
     /**
@@ -35,7 +38,30 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate
+        ([
+            'description' => 'required',
+            'address' => 'optional',
+            'price' => 'required'
+        ]);
+
+        if(Auth::check()){
+            $property = Property::create([
+                'picture' => $request->input('pic'),
+                'description' => $request->input('description'),
+                'address' => $request->input('address_address'),
+                'price' => $request->input('price'),
+                'status' => "Available",
+                'lng' => $request->input('address_longitude'),
+                'lat' => $request->input('address_latitude'),
+                'user_id' => Auth::id()
+            ]);
+
+            if($property){
+                return  redirect()->route('property.index')->with('success','new properties successfuly addded');
+            }
+        }
+        
     }
 
     /**
@@ -46,7 +72,7 @@ class PropertiesController extends Controller
      */
     public function show(Property $property)
     {
-        return view('singlehouse');
+        return view('user/add_property');
     }
 
     /**

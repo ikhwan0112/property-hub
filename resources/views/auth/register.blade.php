@@ -27,10 +27,8 @@
 
                         {{-- <div class="form-group row">
                             <label for="picture" class="col-md-4 col-form-label text-md-right">{{ __('Picture') }}</label>
-
                             <div class="col-md-6">
                                 <input id="picture" type="file" class="{{ $errors->has('picture') ? ' is-invalid' : '' }}" name="picture" value="{{ old('picture') }}" required autofocus>
-
                                 @if ($errors->has('picture'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('picture') }}</strong>

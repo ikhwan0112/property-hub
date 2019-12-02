@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -45,7 +46,19 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $admin = User::create([
+                'name' => $request->input('inputNameAdmin'),
+                'password' => Hash::make($request->input('inputPasswd')),
+                'email' => $request->input('inputEmail'),
+                'phone_no' => $request->input('inputPhoneNumber'),
+                'is_admin' => $request->input('inputRole'),
+            ]);
+
+            if($admin){
+                return redirect()->route('users.index');
+            }
+        }
     }
 
     /**

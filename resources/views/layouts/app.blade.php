@@ -51,7 +51,7 @@
                         @else
                             @if (Auth::user()->is_admin == 'admin')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Add Admin</a>
+                                    <a class="nav-link" href="/users/create">Add Admin</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="">View Report</a>

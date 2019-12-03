@@ -1,12 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-<<<<<<< Updated upstream
-			
-
-
-=======
->>>>>>> Stashed changes
 <div class="container">
 	<div class="col-sm-4">
 		<div class="col-lg-12">
@@ -40,11 +34,7 @@
 
 
 				<label for="address_address">Address</label>
-<<<<<<< Updated upstream
-    			<input type="text" id="address_address" name="address_address" class="form-control map-input">
-=======
     			<input type="text" id="address-input" name="address_address" class="form-control map-input">
->>>>>>> Stashed changes
     			<input type="hidden" name="address_latitude" id="address-latitude" value="0" />
     			<input type="hidden" name="address_longitude" id="address-longitude" value="0" />
 		</div>

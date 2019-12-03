@@ -15,6 +15,6 @@ class Property extends Model
     }
 
     public function details(){
-        return $this->hasMany('App\Detail');
+        return $this->hasOne('App\Detail');
     }
 }

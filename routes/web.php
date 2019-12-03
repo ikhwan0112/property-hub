@@ -34,7 +34,7 @@ Route::get('/welcome', 'UsersController@is_admin');
 
 
 
-
+Route::post('users/{users}', 'UsersController@update');
 Route::resource('users', 'UsersController');
 // Route::resource('roles', 'RolesController');
 Route::resource('properties', 'PropertiesController');

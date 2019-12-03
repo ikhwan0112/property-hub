@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Auth;
+use Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -56,7 +57,7 @@ class UsersController extends Controller
             ]);
 
             if($admin){
-                return redirect()->route('users.index');
+                return redirect()->route('admin.index');
             }
         }
     }
@@ -80,7 +81,8 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user = User::find($user->id);
+        return view('admin.edit', ['user'=>$user]);
     }
 
     /**
@@ -92,7 +94,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $id = Auth::id();
+        $users = User::where('id', $id)->first();
+
+        if($request->hasFile('fileName')){
+            $picture = $request->file('fileName');
+            $filename = time() . '.' . $picture->getClientOriginalExtension();
+            Image::make($picture)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
+
+            if(Auth::user()->is_admin == 'admin'){
+                $users->name = $request->input('updateNameAdmin');
+                $users->phone_no = $request->input('updatePhoneNumber');
+                $users->email = $request->input('updateEmail');
+                $users->picture = $filename;
+                $users->save();
+    
+                if($users){
+                    return view('admin.index');
+                }
+    
+            }else{
+                // user perspective
+            }
+        }
     }
 
     /**

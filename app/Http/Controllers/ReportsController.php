@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use App\Report;
 use Illuminate\Http\Request;
 
@@ -24,7 +24,7 @@ class ReportsController extends Controller
      */
     public function create()
     {
-        //
+        return view('report.create');
     }
 
     /**
@@ -35,7 +35,16 @@ class ReportsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         if(Auth::check()){
+            $report=Report::create([
+             'description'=> $request->input('report'),
+                'user_id' => Auth::id()
+            ]);
+
+            if($report){
+                return redirect()->route('properties.index');
+            }
+        }
     }
 
     /**

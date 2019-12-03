@@ -23,6 +23,23 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<<<<<<< Updated upstream
+=======
+
+    <style>
+        .avatar-picture {
+            width: 25%;
+            position: absolute;
+            border-radius: 50%;
+            left: -30%;
+            top: 10%;
+        }
+
+        .user-space {
+            position: relative;
+        }
+    </style>
+>>>>>>> Stashed changes
 </head>
 
 <body>
@@ -42,7 +59,27 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+<<<<<<< Updated upstream
 
+=======
+                        @if(Auth::check())
+                            @if (Auth::user()->is_admin == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/create">Add Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">View Report</a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="/properties">Add Properties</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/reports/create">Complaint</a>
+                            </li>
+                            @endif
+                        @endif
+>>>>>>> Stashed changes
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -65,6 +102,12 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+<<<<<<< Updated upstream
+=======
+                                
+                                <a class="dropdown-item" href="/users/{{ Auth::user()->id }}/edit"><i class="fa fa-user-circle-o"></i> My Profile</a>
+
+>>>>>>> Stashed changes
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                              document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

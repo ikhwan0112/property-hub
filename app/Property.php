@@ -8,9 +8,13 @@ class Property extends Model
 {
     protected $fillable = [
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         'picture', 'description', 'address', 'price', 'detail_id', 'user-id',
 =======
         'picture', 'description', 'address', 'price', 'status', 'lng', 'lat', 'user_id',
+>>>>>>> Stashed changes
+=======
+        'picture', 'description', 'address', 'price', 'user_id', 'lng', 'lat', 'status'
 >>>>>>> Stashed changes
     ];
 
@@ -19,6 +23,6 @@ class Property extends Model
     }
 
     public function details(){
-        return $this->hasMany('App\Detail');
+        return $this->hasOne('App\Detail');
     }
 }

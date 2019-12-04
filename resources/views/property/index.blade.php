@@ -25,6 +25,7 @@
 			<th width="300px">Address</th>
 			<th>Price</th>
 			<th>Status</th>
+			<th width="180px">Details</th>
 			<th width="180px">Action</th>
 		</tr>
 
@@ -32,26 +33,37 @@
 
 		<tr>
 			<td><b>{{$property->id}}</b></td>
-			<td>{{$property->picture}}</td>
+			<td><img src="/uploads/properties/{{$property->picture}}"></td>
 			<td>{{$property->description}}</td>
 			<td>{{$property->address}}</td>
 			<td>{{$property->price}}</td>
 			<td>{{$property->status}}</td>
-			<td>{{$property->picture}}</td>
+			<td>
+				<div>
+					<a href=" {{ route('details.create', $property->id) }}" class="btn btn-success">Add Details</a>
+					<a href=" {{ route('details.index', $property->id) }}" class="btn btn-success">View Details</a>
+				</div>
+			</td>
 			<td>
 				<form class="" action="{{route('properties.destroy',$property->id)}}" method="post">
-					<a class="brn brn-sm btn-success"href="{{route('properties.show',$property->id)}}"></a>
-					<a class="brn brn-sm btn-warning"href="{{route('properties.show',$property->id)}}"></a>
+					<a class="brn brn-sm btn-success"href="{{route('properties.edit',$property->id)}}">edit</a><br>
+					<a class="brn brn-sm btn-warning"href="{{route('properties.show',$property->id)}}">show</a><br>
 					@csrf
 					@method('DELETE')
 					<button type="submit" class="btn btn-sm btn-danger">Delete</button>
 				</form>
+				<!-- <form class="" action="{{route('properties.destroy',$property->id)}}" method="post">
+					<a class="brn brn-sm btn-success"href="{{route('properties.show',$property->id)}}"></a>
+					<a class="brn brn-sm btn-warning"href="{{route('properties.show',$property->id)}}"></a>
+					@csrf
+					@method('DELETE')
+					<button type="submit" class="btn btn-sm btn-warning">Edit</button>
+				</form> -->
 			</td>
 		</tr>
 
 		@endforeach
 	</table>
-	{!!$properties->links()!!}
 </div>
 
 @endsection

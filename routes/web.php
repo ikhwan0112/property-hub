@@ -41,11 +41,24 @@ Route::get('user/index', 'PropertiesController@index');
 Route::get('user/add_property', 'PropertiesController@show');
 Route::get('user/user_report', 'PropertiesController@create');
 
+Route::get('admin/list', 'UsersController@list');
 
-
-
+Route::post('users/{users}', 'UsersController@update');
+Route::post('properties/{id}', 'PropertiesController@update');
 Route::resource('users', 'UsersController');
+
 // Route::resource('roles', 'RolesController');
+
 Route::resource('properties', 'PropertiesController');
+<<<<<<< Updated upstream
+// Route::resource('reports', 'ReportsController');
+>>>>>>> Stashed changes
+=======
+
+Route::resource("details",'DetailsController');
+// Route::get('details/{property_id?}', function({{$property->id}})
+//  {return $property_id}
+// );
+
 // Route::resource('reports', 'ReportsController');
 >>>>>>> Stashed changes

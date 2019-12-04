@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Property;
 use Auth;
+use Image;
 use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
@@ -15,9 +16,9 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        $properties = property::latest()->paginate(5);
-        return view('property.index',compact('properties'))
-        ->with('i',(request()->input('page,1')-1)*5);
+        
+        $properties = Property::where('user_id', Auth::id())->get();
+        return view('property.index', compact('properties'));
     }
 
     /**
@@ -54,20 +55,23 @@ class PropertiesController extends Controller
             'price' => 'required'
         ]);
 
-        if(Auth::check()){
+        if(Auth::check() && $request->hasFile('pic')){
+
+            $picture = $request->file('pic');
+            $filename = time() . '.' . $picture->getClientOriginalExtension();
+            Image::make($picture)->resize(300, 300)->save(public_path('/uploads/properties/' . $filename));
+
             $property = Property::create([
-                'picture' => $request->input('pic'),
+                'picture' => $filename,
                 'description' => $request->input('description'),
                 'address' => $request->input('address_address'),
                 'price' => $request->input('price'),
                 'status' => "Available",
-                'lng' => $request->input('address_longitude'),
-                'lat' => $request->input('address_latitude'),
-                'user_id' => Auth::id()
+
             ]);
 
             if($property){
-                return  redirect()->route('property.index')->with('success','new properties successfuly addded');
+                return  redirect()->route('properties.index')->with('success','New properties successfuly addded');
             }
         }
         
@@ -80,12 +84,17 @@ class PropertiesController extends Controller
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property)
+    public function show($id)
     {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         //
 =======
         return view('user/add_property');
+>>>>>>> Stashed changes
+=======
+        $property= Property::find($id);
+        return view('property.detail',compact('property'));
 >>>>>>> Stashed changes
     }
 
@@ -97,7 +106,8 @@ class PropertiesController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+         $property = Property::find($property->id);
+        return view('property.edit', ['property'=>$property]);
     }
 
     /**
@@ -109,7 +119,40 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        //
+        $id = Auth::id();
+        $properties = Property::find($property->id);
+
+        if($request->hasFile('pic')){
+            $picture = $request->file('pic');
+            $filename = time() . '.' . $picture->getClientOriginalExtension();
+            Image::make($picture)->resize(300, 300)->save(public_path('/uploads/properties/' . $filename));
+
+            if(Auth::check()){
+
+                $properties->picture = $filename;
+                $properties->description = $request->input('description');
+                $properties->address = $request->input('address_address');
+                $properties->price = $request->input('price');
+                $properties->status = $request->input('status');
+
+            }
+            if($properties){
+                return  redirect()->route('properties.index')->with('success',' Properties successfuly altered');
+            }
+        }else{
+            if(Auth::check()){
+
+                $properties->description = $request->input('description');
+                $properties->address = $request->input('address_address');
+                $properties->price = $request->input('price');
+                $properties->status = $request->input('status');
+
+            }
+
+            if($properties){
+                return  redirect()->route('properties.index')->with('success',' Properties successfuly altered');
+            }
+        }
     }
 
     /**
@@ -120,6 +163,11 @@ class PropertiesController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+         $findproperty = Property::find( $property->id );
+        if($findproperty->delete()){
+            return redirect()->route('properties.index')->with('success', 'Property deleted Successfully');
+        }
+        
+        return back()->withInput()->with('errors', 'Property could not be deleted');
     }
 }

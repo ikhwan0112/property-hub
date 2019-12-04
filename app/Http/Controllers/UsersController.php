@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Property;
 use Auth;
+use Image;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -16,6 +18,7 @@ class UsersController extends Controller
     public function index()
     {
 
+<<<<<<< Updated upstream
     }
 
     public function add(){
@@ -28,6 +31,17 @@ class UsersController extends Controller
 
     public function report(){
         return view('admin/view_report');
+=======
+        foreach($user as $role){
+            if($role->is_admin == 'admin'){
+                $properties = Property::all();
+
+                return view('admin.index', compact('properties'));
+            }else{
+                return view('user.index');
+            }
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -48,7 +62,23 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< Updated upstream
         //
+=======
+        if(Auth::check()){
+            $admin = User::create([
+                'name' => $request->input('inputNameAdmin'),
+                'password' => Hash::make($request->input('inputPasswd')),
+                'email' => $request->input('inputEmail'),
+                'phone_no' => $request->input('inputPhoneNumber'),
+                'is_admin' => $request->input('inputRole'),
+            ]);
+
+            if($admin){
+                return redirect()->route('admin.index');
+            }
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -70,7 +100,8 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user = User::find($user->id);
+        return view('admin.edit', ['user'=>$user]);
     }
 
     /**
@@ -82,7 +113,43 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $id = Auth::id();
+        $users = User::find($id);
+
+        if($request->hasFile('fileName')){
+            $picture = $request->file('fileName');
+            $filename = time() . '.' . $picture->getClientOriginalExtension();
+            Image::make($picture)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
+
+            if(Auth::user()->is_admin == 'admin'){
+                $users->name = $request->input('updateNameAdmin');
+                $users->phone_no = $request->input('updatePhoneNumber');
+                $users->email = $request->input('updateEmail');
+                $users->picture = $filename;
+                $users->save();
+    
+                if($users){
+                    return view('admin.index');
+                }
+    
+            }else{
+                
+            }
+        }else{
+            if(Auth::user()->is_admin == 'admin'){
+                $users->name = $request->input('updateNameAdmin');
+                $users->phone_no = $request->input('updatePhoneNumber');
+                $users->email = $request->input('updateEmail');
+                $users->save();
+    
+                if($users){
+                    return view('admin.index');
+                }
+    
+            }else{
+
+            }
+        }
     }
 
     /**
@@ -93,7 +160,12 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $finduser = User::find( $user->id );
+        if($finduser->delete()){
+            return redirect()->route('users.index')->with('success', 'User deleted Successfully');
+        }
+        
+        return back()->withInput()->with('errors', 'Property could not be deleted');
     }
 
     public function is_admin()
@@ -103,5 +175,21 @@ class UsersController extends Controller
 
         return view('welcome', compact('user'));
         
+    }
+
+    public function list()
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('is_admin', 'user')->get();
+
+        foreach($user as $list){
+            if($list->is_admin == 'user'){
+                $users = User::all();
+
+                return view('admin.list', compact('users'));
+            }else{
+                return view('user.index');
+            }
+        }
     }
 }

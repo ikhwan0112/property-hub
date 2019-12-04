@@ -20,6 +20,18 @@
 			<td>Owned By</td>
 			<th width="180px">Action</th>
 		</tr>
+		@foreach($properties as $property)
+		<tr>
+			<td>No.</td>
+			<td>{{ $property->description }}</td>
+			<td>{{ $property->address }}</td>
+			<td>{{ $property->price }}</td>
+			<td>{{ $property->status }}</td>
+			<td><img src="/uploads/properties/{{$property->picture}}"></td>
+			<td>{{ $property->user_id }}</td>
+			<th width="180px"></th>
+		</tr>
+		@endforeach
 	</table>
 </div>
 @endsection

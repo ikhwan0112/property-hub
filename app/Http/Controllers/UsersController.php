@@ -21,8 +21,20 @@ class UsersController extends Controller
         return view('admin/list_house');
     }
 
+<<<<<<< Updated upstream
     public function report(){
         return view('admin/view_report');
+=======
+        foreach($user as $role){
+            if($role->is_admin == 'admin'){
+                $admin = User::select('users')->select('id', 'name', 'phone_no', 'email', 'is_admin')->where('is_admin','admin')->get();
+
+                return view('admin.index', ['admin' => $admin]);
+            }else{
+                return view('user.index');
+            }
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -88,6 +100,12 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $finduser = User::find( $user->id );
+        if($finduser->delete()){
+            return redirect()->route('admin.index')->with('success', 'Deleted Successfully');
+        }
+        
+        return back()->withInput()->with('errors', 'Deletion unsuccessful');
+        
     }
 }

@@ -8,11 +8,11 @@
         </div>
     </div>
 
-    <form class="forms-sample" method="post" action="{{ route('users.update', [$user->id]) }}" enctype="multipart/form-data">
+    <form class="forms-sample" method="post" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="inputNameAdmin">Name</label>
-            <input type="text" name="updateNameAdmin" class="form-control" id="inputNameAdmin" placeholder="Enter Name" value="{{ $user->name }}"/>
+            <input type="text" name="updateName" class="form-control" id="inputName" placeholder="Enter Name" value="{{ $user->name }}"/>
         </div>
         {{-- <div class="form-group">
             <label for="inputPasswd">Password</label>

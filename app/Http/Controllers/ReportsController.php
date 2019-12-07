@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use Auth;
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
@@ -14,7 +15,8 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        //
+        $report = Report::all();
+        return view('report.index', compact('report'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ReportsController extends Controller
      */
     public function create()
     {
-        //
+        return view('report.create');
     }
 
     /**
@@ -35,7 +37,15 @@ class ReportsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $report=Report::create([
+                'description'=> $request->input('report'),
+                'user_id' => Auth::id()
+            ]);
+            if($report){
+                return redirect()->route('properties.index');
+            }
+        }
     }
 
     /**
@@ -46,7 +56,7 @@ class ReportsController extends Controller
      */
     public function show(Report $report)
     {
-        //
+        
     }
 
     /**

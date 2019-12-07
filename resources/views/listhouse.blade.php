@@ -49,11 +49,11 @@
 					<div class="col-lg-6 header-top-left">
 						<div class="top-info">
 							<i class="fa fa-phone"></i>
-							(+88) 666 121 4321
+							(+60) 366 121432
 						</div>
 						<div class="top-info">
 							<i class="fa fa-envelope"></i>
-							info.leramiz@colorlib.com
+							propertyhub@gmail.com
 						</div>
 					</div>
 					<div class="col-lg-6 text-lg-right header-top-right">
@@ -67,12 +67,22 @@
 						@if (Route::has('login'))
 						<div class="user-panel">
 							@auth
-							<a href="{{ url('/home') }}"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+							
+							@foreach ($user as $role)
+								@if ($role->is_admin == 'admin')
+									<a href="/users"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+								@else
+									<a href="/properties"><i class="fa fa-user-circle-o"></i>Dashboard</a>
+								@endif
+							@endforeach
+
+							<a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>{{ __('Logout') }}</a>
+
 							@else
-							<a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a>
+								<a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a>
 
 							@if (Route::has('register'))
-							<a href=""><i class="fa fa-user-circle-o"></i> Register</a>
+								<a href="{{ route('register') }}"><i class="fa fa-user-circle-o"></i> Register</a>
 							@endif
 							@endauth
 						</div>
@@ -92,10 +102,6 @@
 						<ul class="main-menu">
 							<li><a href="{{ url('/') }}">Home</a></li>
 							<li><a href="{{ url('/listhouse') }}">FEATURED LISTING</a></li>
-							<li><a href="">ABOUT US</a></li>
-							<li><a href="{{ url('/singlehouse') }}">Pages</a></li>
-							<li><a href="">Blog</a></li>
-							<li><a href="">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -126,251 +132,47 @@
 	<section class="page-section categories-page">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-4 col-md-6">
-					<!-- feature -->
-					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="img/feature/1.jpg">
-							<div class="sale-notic">FOR SALE</div>
-						</div>
-						<div class="feature-text">
-							<div class="text-center feature-title">
-								<h5>1963 S Crescent Heights Blvd</h5>
-								<p><i class="fa fa-map-marker"></i> Los Angeles, CA 90034</p>
-							</div>
-							<div class="room-info-warp">
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-th-large"></i> 800 Square foot</p>
-										<p><i class="fa fa-bed"></i> 10 Bedrooms</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-car"></i> 2 Garages</p>
-										<p><i class="fa fa-bath"></i> 6 Bathrooms</p>
-									</div>	
+				@foreach($properties as $property)
+					@if($property->status == 'Available')
+					<div class="col-lg-4 col-md-6">
+						<!-- feature -->
+							<div class="feature-item">
+								<div class="feature-pic set-bg">
+									<a href="{{ url('/singlehouse',['idProp' => $property->id]) }}"><img src="/uploads/properties/{{ $property->picture }}" style="height:100%"></a>
 								</div>
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-user"></i> Tony Holland</p>
+								<div class="feature-text">
+									<div class="text-center feature-title">
+										<h5>{{ $property->address }}</h5>
+										
+										{{-- <p><i class="fa fa-map-marker"></i> Los Angeles, CA 90034</p> --}}
 									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-clock-o"></i> 1 days ago</p>
-									</div>	
+									<div class="room-info-warp">
+										<div class="room-info">
+											<div class="rf-left">
+												<p><i class="fa fa-th-large"></i> {{ $property->area }} Square foot</p>
+												<p><i class="fa fa-bed"></i> {{ $property->bedroom }} Bedrooms</p>
+											</div>
+											<div class="rf-right">
+												<p><i class="fa fa-bath"></i> {{ $property->bathroom }} Bathrooms</p>
+											</div>	
+										</div>
+										<div class="room-info">
+											<div class="rf-left">
+												<p><i class="fa fa-user"></i> {{ $property->name }}</p>
+											</div>
+										</div>
+									</div>
+									<a href="{{ url('/singlehouse',['idProp' => $property->id]) }}" class="room-price">RM{{ $property->price }}</a>									
 								</div>
 							</div>
-							<a href="#" class="room-price">$1,200,000</a>
-						</div>
+						<!-- End Feature -->
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<!-- feature -->
-					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="img/feature/2.jpg">
-							<div class="sale-notic">FOR SALE</div>
-						</div>
-						<div class="feature-text">
-							<div class="text-center feature-title">
-								<h5>305 North Palm Drive</h5>
-								<p><i class="fa fa-map-marker"></i> Beverly Hills, CA 90210</p>
-							</div>
-							<div class="room-info-warp">
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-th-large"></i> 1500 Square foot</p>
-										<p><i class="fa fa-bed"></i> 16 Bedrooms</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-car"></i> 2 Garages</p>
-										<p><i class="fa fa-bath"></i> 8 Bathrooms</p>
-									</div>	
-								</div>
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-user"></i> Gina Wesley</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-clock-o"></i> 1 days ago</p>
-									</div>	
-								</div>
-							</div>
-							<a href="#" class="room-price">$4,500,000</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<!-- feature -->
-					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="img/feature/3.jpg">
-							<div class="rent-notic">FOR Rent</div>
-						</div>
-						<div class="feature-text">
-							<div class="text-center feature-title">
-								<h5>305 North Palm Drive</h5>
-								<p><i class="fa fa-map-marker"></i> Beverly Hills, CA 90210</p>
-							</div>
-							<div class="room-info-warp">
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-th-large"></i> 1500 Square foot</p>
-										<p><i class="fa fa-bed"></i> 16 Bedrooms</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-car"></i> 2 Garages</p>
-										<p><i class="fa fa-bath"></i> 8 Bathrooms</p>
-									</div>	
-								</div>
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-user"></i> Gina Wesley</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-clock-o"></i> 1 days ago</p>
-									</div>	
-								</div>
-							</div>
-							<a href="#" class="room-price">$2,500/month</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<!-- feature -->
-					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="img/feature/4.jpg">
-							<div class="sale-notic">FOR SALE</div>
-						</div>
-						<div class="feature-text">
-							<div class="text-center feature-title">
-								<h5>28 Quaker Ridge Road, Manhasset</h5>
-								<p><i class="fa fa-map-marker"></i> 28 Quaker Ridge Road, Manhasset</p>
-							</div>
-							<div class="room-info-warp">
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-th-large"></i> 1200 Square foot</p>
-										<p><i class="fa fa-bed"></i> 12 Bedrooms</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-car"></i> 3 Garages</p>
-										<p><i class="fa fa-bath"></i> 8 Bathrooms</p>
-									</div>	
-								</div>
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-user"></i> Sasha Gordon </p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-clock-o"></i> 8 days ago</p>
-									</div>	
-								</div>
-							</div>
-							<a href="#" class="room-price">$5,600,000</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<!-- feature -->
-					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="img/feature/5.jpg">
-							<div class="rent-notic">FOR Rent</div>
-						</div>
-						<div class="feature-text">
-							<div class="text-center feature-title">
-								<h5>Sofi Berryessa 750 N King Road</h5>
-								<p><i class="fa fa-map-marker"></i> San Jose, CA 95133</p>
-							</div>
-							<div class="room-info-warp">
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-th-large"></i> 500 Square foot</p>
-										<p><i class="fa fa-bed"></i> 4 Bedrooms</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-car"></i> 1 Garages</p>
-										<p><i class="fa fa-bath"></i> 2 Bathrooms</p>
-									</div>	
-								</div>
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-user"></i> Gina Wesley</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-clock-o"></i> 8 days ago</p>
-									</div>	
-								</div>
-							</div>
-							<a href="#" class="room-price">$1,600/month</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<!-- feature -->
-					<div class="feature-item">
-						<div class="feature-pic set-bg" data-setbg="img/feature/6.jpg">
-							<div class="sale-notic">FOR SALE</div>
-						</div>
-						<div class="feature-text">
-							<div class="text-center feature-title">
-								<h5>1203 Orren Street, Northeast</h5>
-								<p><i class="fa fa-map-marker"></i> Washington, DC 20002</p>
-							</div>
-							<div class="room-info-warp">
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-th-large"></i> 700 Square foot</p>
-										<p><i class="fa fa-bed"></i> 7 Bedrooms</p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-car"></i> 1 Garages</p>
-										<p><i class="fa fa-bath"></i> 7 Bathrooms</p>
-									</div>	
-								</div>
-								<div class="room-info">
-									<div class="rf-left">
-										<p><i class="fa fa-user"></i> Sasha Gordon </p>
-									</div>
-									<div class="rf-right">
-										<p><i class="fa fa-clock-o"></i> 8 days ago</p>
-									</div>	
-								</div>
-							</div>
-							<a href="#" class="room-price">$1,600,000</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="site-pagination">
-				<span>1</span>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#"><i class="fa fa-angle-right"></i></a>
+					@endif
+				@endforeach
 			</div>
 		</div>
 	</section>
 	<!-- page end -->
-
-
-	<!-- Clients section -->
-	<div class="clients-section">
-		<div class="container">
-			<div class="clients-slider owl-carousel">
-				<a href="#">
-					<img src="img/partner/1.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/2.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/3.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/4.png" alt="">
-				</a>
-				<a href="#">
-					<img src="img/partner/5.png" alt="">
-				</a>
-			</div>
-		</div>
-	</div>
-	<!-- Clients section end -->
 
 	@include('footer')
                                         

@@ -22,6 +22,8 @@ class CreatePropertiesTable extends Migration
             $table->string('status');
             $table->double('lng'); //longitud
             $table->double('lat');  //latitud
+            $table->integer('detail_id')->unsigned()->nullable();
+            $table->foreign('detail_id')->references('id')->on('details')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Property;
 use Auth;
+use DB;
 use Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,11 +24,22 @@ class UsersController extends Controller
 
         foreach($user as $role){
             if($role->is_admin == 'admin'){
-                return view('admin.index');
+                $properties = DB::table('users')
+                    ->join('properties', 'users.id', '=', 'properties.user_id')
+                    ->select('properties.picture', 'description', 'address', 'price', 'status', 'name')
+                    ->get();
+
+                return view('admin.index', compact('properties'));
             }else{
-                return view('user.index');
+                return view('properties.index');
             }
         }
+    }
+
+    public function adminList()
+    {
+        $admin = User::select('users')->select('id', 'name', 'phone_no', 'email', 'is_admin')->where('is_admin','admin')->get();
+        return view('admin.listadmin', compact('admin'));
     }
 
     /**
@@ -70,7 +83,8 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $admin = User::find($user->id);
+        return view('admin.show', compact('admin'));
     }
 
     /**
@@ -95,7 +109,7 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $id = Auth::id();
-        $users = User::where('id', $id)->first();
+        $users = User::find($id);
 
         if($request->hasFile('fileName')){
             $picture = $request->file('fileName');
@@ -103,18 +117,47 @@ class UsersController extends Controller
             Image::make($picture)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
 
             if(Auth::user()->is_admin == 'admin'){
-                $users->name = $request->input('updateNameAdmin');
+                $users->name = $request->input('updateName');
                 $users->phone_no = $request->input('updatePhoneNumber');
                 $users->email = $request->input('updateEmail');
                 $users->picture = $filename;
                 $users->save();
     
                 if($users){
-                    return view('admin.index');
+                    return redirect()->route('users.index')->with('success','new properties successfuly addded');
                 }
     
             }else{
-                // user perspective
+                $users->name = $request->input('updateName');
+                $users->phone_no = $request->input('updatePhoneNumber');
+                $users->email = $request->input('updateEmail');
+                $users->picture = $filename;
+                $users->save();
+
+                if($users){
+                    return redirect()->route('properties.index')->with('success','new properties successfuly addded');
+                }
+            }
+        }else{
+            if(Auth::user()->is_admin == 'admin'){
+                $users->name = $request->input('updateName');
+                $users->phone_no = $request->input('updatePhoneNumber');
+                $users->email = $request->input('updateEmail');
+                $users->save();
+    
+                if($users){
+                    return redirect()->route('users.index')->with('success','new properties successfuly addded');
+                }
+    
+            }else{
+                $users->name = $request->input('updateName');
+                $users->phone_no = $request->input('updatePhoneNumber');
+                $users->email = $request->input('updateEmail');
+                $users->save();
+                
+                if($users){
+                    return redirect()->route('properties.index');
+                }
             }
         }
     }
@@ -127,15 +170,12 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
-    }
+        $finduser = User::find( $user->id );
 
-    public function is_admin()
-    {
-        $id = Auth::id();
-        $user = User::select('is_admin')->where('id', $id)->get();
-
-        return view('welcome', compact('user'));
+        if($finduser->delete()){
+            return redirect()->route('users.index')->with('success', 'User deleted Successfully');
+        }
         
+        return back()->withInput()->with('errors', 'Property could not be deleted');
     }
 }

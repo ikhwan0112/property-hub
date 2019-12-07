@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Property;
+use App\User;
+use DB;
 use Auth;
+use Image;
 use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
@@ -15,9 +18,9 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        $properties = property::latest()->paginate(5);
-        return view('property.index',compact('properties'))
-        ->with('i',(request()->input('page,1')-1)*5);
+        $properties = Property::where('user_id', Auth::id())->get();
+        $check = Property::whereNotNull('detail_id');
+        return view('property.index', compact('properties', 'check'));
     }
 
     /**
@@ -45,9 +48,14 @@ class PropertiesController extends Controller
             'price' => 'required'
         ]);
 
-        if(Auth::check()){
+        if(Auth::check() && $request->hasFile('pic')){
+
+            $picture = $request->file('pic');
+            $filename = time() . '.' . $picture->getClientOriginalExtension();
+            Image::make($picture)->resize(1000, 636)->save(public_path('/uploads/properties/' . $filename));
+
             $property = Property::create([
-                'picture' => $request->input('pic'),
+                'picture' => $filename,
                 'description' => $request->input('description'),
                 'address' => $request->input('address_address'),
                 'price' => $request->input('price'),
@@ -58,10 +66,9 @@ class PropertiesController extends Controller
             ]);
 
             if($property){
-                return  redirect()->route('property.index')->with('success','new properties successfuly addded');
+                return redirect()->route('properties.index')->with('success','New Properties Successfuly Added');
             }
         }
-        
     }
 
     /**
@@ -72,7 +79,8 @@ class PropertiesController extends Controller
      */
     public function show(Property $property)
     {
-        return view('user/add_property');
+        $property= Property::find($property->id);
+        return view('property.detail',compact('property'));
     }
 
     /**
@@ -83,7 +91,8 @@ class PropertiesController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+        $property = Property::find($property->id);
+        return view('property.edit', ['property'=>$property]);
     }
 
     /**
@@ -93,9 +102,38 @@ class PropertiesController extends Controller
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, $prop)
     {
-        //
+        $id = Auth::id();
+        $properties = Property::find($prop);
+
+        if($request->hasFile('pic')){
+            $picture = $request->file('pic');
+            $filename = time() . '.' . $picture->getClientOriginalExtension();
+            Image::make($picture)->resize(570, 270)->save(public_path('/uploads/properties/' . $filename));
+            if(Auth::check()){
+                $properties->picture = $filename;
+                $properties->description = $request->input('description');
+                $properties->address = $request->input('address_address');
+                $properties->price = $request->input('price');
+                $properties->status = $request->input('status');
+                $properties->save();
+            }
+            if($properties){
+                return  redirect()->route('properties.index')->with('success',' Properties successfuly altered');
+            }
+        }else{
+            if(Auth::check()){
+                $properties->description = $request->input('description');
+                $properties->address = $request->input('address_address');
+                $properties->price = $request->input('price');
+                $properties->status = $request->input('status');
+                $properties->save();
+            }
+            if($properties){
+                return  redirect()->route('properties.index')->with('success',' Properties successfuly altered');
+            }
+        }
     }
 
     /**
@@ -106,6 +144,54 @@ class PropertiesController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        $findproperty = Property::find( $property->id );
+
+        if($findproperty->delete()){
+            return redirect()->route('properties.index')->with('success', 'Property deleted Successfully');
+        }
+        
+        return back()->withInput()->with('errors', 'Property could not be deleted');
+    }
+
+    public function listhouse()
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('id', $id)->get();
+
+        $properties = DB::table('properties')
+                    ->join('users', 'users.id', '=', 'properties.user_id')
+                    ->join('details', 'details.id', '=', 'properties.detail_id')
+                    ->select('name', 'price', 'address', 'properties.picture','status', 'properties.id', 'bedroom', 'area', 'bathroom')
+                    ->get();
+        return view('listhouse', compact('properties', 'user'));
+    }
+
+    public function singlehouse($idProp)
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('id', $id)->get();
+
+        $properties = DB::table('details')
+                    ->join('properties', 'details.id', '=', 'properties.detail_id')
+                    ->join('users', 'properties.user_id', '=', 'users.id')
+                    ->select('properties.picture', 'name', 'price', 'type', 'bedroom', 'bathroom', 'area', 'address', 'description', 'email', 'phone_no', 'users.picture as userPic', 'lat', 'lng', 'address')
+                    ->where('properties.id', $idProp)
+                    ->get();
+
+        return view('singlehouse', compact('user', 'properties'));
+    }
+    public function welcomeHouse()
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('id', $id)->get();
+
+        $properties = DB::table('properties')
+                    ->join('users', 'users.id', '=', 'properties.user_id')
+                    ->join('details', 'properties.detail_id', '=', 'details.id')
+                    ->select('name', 'price', 'address', 'properties.picture','status', 'properties.id', 'bedroom', 'bathroom', 'area')
+                    ->take(3)
+                    ->get();
+
+        return view('welcome', compact('user', 'properties'));
     }
 }

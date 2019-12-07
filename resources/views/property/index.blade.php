@@ -4,7 +4,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-10">
-			<h3>List  of Properties</h3>
+			<h3>List of Properties</h3>
 		</div>
 		<div class="col-sm-2">
 			<a class="btn btn-sm btn-success" href="{{ route('properties.create') }}"> Enter new property</a>
@@ -19,39 +19,46 @@
 
 	<table class="table table-hover table-sm">
 		<tr>
-			<th width="50px"><b>No.</b></th>
-			<th width="200px">Picture</th>
-			<th width="300px">Description</th>
-			<th width="300px">Address</th>
-			<th>Price</th>
+			<th><b>No.</b></th>
+			<th>Description</th>
+			<th>Address</th>
+			{{-- <th>Price</th> --}}
 			<th>Status</th>
-			<th width="180px">Action</th>
+			<th>Action</th>
 		</tr>
 
-		@foreach ($properties as $property)
+		@foreach ($properties as $no => $property)
 
 		<tr>
-			<td><b>{{$property->id}}</b></td>
-			<td>{{$property->picture}}</td>
+			<td><b>{{$no + 1}}</b></td>
 			<td>{{$property->description}}</td>
 			<td>{{$property->address}}</td>
-			<td>{{$property->price}}</td>
+			{{-- <td>RM{{$property->price}}</td> --}}
 			<td>{{$property->status}}</td>
-			<td>{{$property->picture}}</td>
 			<td>
-				<form class="" action="{{route('properties.destroy',$property->id)}}" method="post">
-					<a class="brn brn-sm btn-success"href="{{route('properties.show',$property->id)}}"></a>
-					<a class="brn brn-sm btn-warning"href="{{route('properties.show',$property->id)}}"></a>
-					@csrf
-					@method('DELETE')
-					<button type="submit" class="btn btn-sm btn-danger">Delete</button>
-				</form>
+				<div>
+					@if($check)
+						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success disabled">Add Details</a>
+					@else
+						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success" >Add Details</a>
+					@endif
+					<a href="/details/{{ $property->detail_id }}/edit" class="btn btn-success">Edit Details</a>
+				</div>
+				<br>
+				<div>
+					<form class="" action="{{route('properties.destroy',$property->id)}}" method="post">
+						<a class="btn btn-primary" href="{{route('properties.edit', $property->id)}}">Edit</a>
+						<a class="btn btn-warning" href="{{route('properties.show', $property->id)}}">Show</a>
+						@csrf
+						@method('DELETE')
+						<button type="submit" class="btn btn-danger">Delete</button>
+					</form>
+				</div>
 			</td>
 		</tr>
 
 		@endforeach
 	</table>
-	{!!$properties->links()!!}
 </div>
 
 @endsection

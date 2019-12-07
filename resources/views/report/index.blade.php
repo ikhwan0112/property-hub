@@ -13,10 +13,14 @@
 		<tr>
 			<td>No.</td>
 			<td>From</td>
-			<td>Complaint</td>>
+			<td>Complaint</td>
 		</tr>
 		<tr>
-			
+			@foreach ($report as $reports)
+				<td>{{ $reports->id }}</td>
+				<td>{{ $reports->user_id }}</td>
+				<td>{{ $reports-> description }}</td>
+			@endforeach
 		</tr>
 	</table>
 </div>

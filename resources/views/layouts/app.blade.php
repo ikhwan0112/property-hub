@@ -23,10 +23,10 @@
 
     <style>
         .avatar-picture {
-            width: 17%;
+            width: 21%;
             position: absolute;
             border-radius: 50%;
-            left: -18%;
+            left: -21%;
             top: 10%;
         }
 
@@ -40,9 +40,17 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/welcome') }}">
-                    {{ config('app.name', 'PropertyHub') }}
-                </a>
+                @if(Auth::check())
+                    @if(Auth::user()->is_admin == 'admin')
+                        <a class="navbar-brand" href="{{ url('/users') }}">
+                            {{ config('app.name', 'PropertyHub') }}
+                        </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/properties') }}">
+                            {{ config('app.name', 'PropertyHub') }}
+                        </a>
+                    @endif
+                @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -53,20 +61,26 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @if(Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
                             @if (Auth::user()->is_admin == 'admin')
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users/create">Add Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="">View Report</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/create">Add Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reports">View Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/report">Admin List</a>
+                                </li>
                             @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="">Add Properties</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="">Complaint</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/properties/create">Add Properties</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reports/create"">Complaint</a>
+                                </li>
                             @endif
                         @endif
                     </ul>
@@ -92,7 +106,9 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                
                                 <a class="dropdown-item" href="/users/{{ Auth::user()->id }}/edit"><i class="fa fa-user-circle-o"></i> My Profile</a>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i
                                         class="fa fa-sign-out"></i>
@@ -119,5 +135,4 @@
 
     </div>
 </body>
-
 </html>

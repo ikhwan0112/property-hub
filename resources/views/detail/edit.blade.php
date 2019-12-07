@@ -19,8 +19,9 @@
 	</div>
 	@endif
 
-	<form class="forms-sample" action="{{ route('details.store') }}" method="post" enctype="multipart/form-data">
-		@csrf
+	<form class="forms-sample" action="{{ route('details.update', [$detail->id]) }}" method="post">
+        @csrf
+        {{ method_field('PUT')}}
 		<div class="container">
 			<label for="area">House Type</label>
 			<div id="address-map-container">
@@ -34,24 +35,21 @@
 			</div><br>
 			<div class="form-group">
 				<label for="area">Area</label>
-				<input type="text" name="area" class="form-control" id="area" placeholder="Enter Area">
+            <input type="text" name="area" class="form-control" id="area" placeholder="Enter Area" value="{{ $detail->area }}">
 			</div>
 			<div class="form-group">
 				<label for="bedroom">Bedroom</label>
-				<input type="text" name="bedroom" class="form-control" id="bedroom" placeholder="Enter Bedroom">
+				<input type="text" name="bedroom" class="form-control" id="bedroom" placeholder="Enter Bedroom" value="{{ $detail->bedroom }}">
 			</div>
 			<div class="form-group">
 				<label for="bathroom">Bathroom</label>
-				<input type="text" name="bathroom" class="form-control" id="bathroom" placeholder="Enter Bathroom">
+				<input type="text" name="bathroom" class="form-control" id="bathroom" placeholder="Enter Bathroom" value="{{ $detail->bathroom }}">
 			</div>
 
 			<div class="form-group">
 				<label for="facility-input">Facilities Available</label><br>
 				<textarea class="form-control" name="facility" id="facility" placeholder="Enter facilities"
-					rows="3"></textarea>
-			</div>
-			<div class="form-group">
-				<input type="hidden" value="{{ $id }}" name="property_id" class="form-control" id="property_id">
+					rows="3">{{ $detail->facility }}</textarea>
 			</div>
 			<div class="form-group float-right">
 				<button type="submit" class="btn btn-success mr-2">Submit</button>

@@ -6,6 +6,9 @@
 
     <title>PropertyHub</title>
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 
@@ -84,11 +87,11 @@
                         <div class="col-lg-6 header-top-left">
                             <div class="top-info">
                                 <i class="fa fa-phone"></i>
-                                (+88) 666 121 4321
+                                (+60) 366 121432
                             </div>
                             <div class="top-info">
                                 <i class="fa fa-envelope"></i>
-                                info.leramiz@colorlib.com
+                                propertyhub@gmail.com
                             </div>
                         </div>
                         <div class="col-lg-6 text-lg-right header-top-right">
@@ -136,12 +139,8 @@
                                 <i class="fa fa-bars"></i>
                             </div>
                             <ul class="main-menu">
-                                <li><a href="{{ url('/') }}">Home</a></li>
+                                <li><a href="{{ url('/welcome') }}">Home</a></li>
                                 <li><a href="{{ url('/listhouse') }}">FEATURED LISTING</a></li>
-                                <li><a href="">ABOUT US</a></li>
-                                <li><a href="{{ url('/singlehouse') }}">Pages</a></li>
-                                <li><a href="">Blog</a></li>
-                                <li><a href="">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -154,7 +153,7 @@
         <section class="hero-section set-bg">
             <div class="container hero-text text-white">
                 <h2>find your place with our local life style</h2>
-                <p>Search real estate property records, houses, condos, land and more on leramiz.com®.<br>Find property info from the most comprehensive source data.</p>
+                <p>Search real estate property records, houses, condos, land and more on propertyhub.com®.<br>Find property info from the most comprehensive source data.</p>
                 <a href="#" class="site-btn">VIEW DETAIL</a>
             </div>
         </section>
@@ -186,111 +185,38 @@
                 <p>Browse houses and flats for sale and to rent in your area</p>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <!-- feature -->
-                    <div class="feature-item">
-                        <div class="feature-pic set-bg" data-setbg="img/feature/1.jpg">
-                            <div class="sale-notic">FOR SALE</div>
-                        </div>
-                        <div class="feature-text">
-                            <div class="text-center feature-title">
-                                <h5>1963 S Crescent Heights Blvd</h5>
-                                <p><i class="fa fa-map-marker"></i> Los Angeles, CA 90034</p>
+                @foreach ($properties as $property)
+                    <div class="col-lg-4 col-md-6">
+                        <!-- feature -->
+                        <div class="feature-item">
+                            <div class="feature-pic set-bg">
+                                    <a href="{{ url('/singlehouse',['idProp' => $property->id]) }}"><img src="/uploads/properties/{{ $property->picture }}" style="height:100%"></a>
                             </div>
-                            <div class="room-info-warp">
-                                <div class="room-info">
-                                    <div class="rf-left">
-                                        <p><i class="fa fa-th-large"></i> 800 Square foot</p>
-                                        <p><i class="fa fa-bed"></i> 10 Bedrooms</p>
-                                    </div>
-                                    <div class="rf-right">
-                                        <p><i class="fa fa-car"></i> 2 Garages</p>
-                                        <p><i class="fa fa-bath"></i> 6 Bathrooms</p>
-                                    </div>  
+                            <div class="feature-text">
+                                <div class="text-center feature-title">
+                                    <h5>{{ $property->address }}</h5>
                                 </div>
-                                <div class="room-info">
-                                    <div class="rf-left">
-                                        <p><i class="fa fa-user"></i> Tony Holland</p>
+                                <div class="room-info-warp">
+                                    <div class="room-info">
+                                        <div class="rf-left">
+                                            <p><i class="fa fa-th-large"></i> {{ $property->area }} Square foot</p>
+                                            <p><i class="fa fa-bed"></i> {{ $property->bedroom }} Bedrooms</p>
+                                        </div>
+                                        <div class="rf-right">
+                                            <p><i class="fa fa-bath"></i> {{ $property->bathroom }} Bathrooms</p>
+                                        </div>  
                                     </div>
-                                    <div class="rf-right">
-                                        <p><i class="fa fa-clock-o"></i> 1 days ago</p>
-                                    </div>  
+                                    <div class="room-info">
+                                        <div class="rf-left">
+                                            <p><i class="fa fa-user"></i> {{ $property->name }}</p>
+                                        </div>
+                                    </div>
                                 </div>
+                                <a href="#" class="room-price">RM{{ $property->price }}</a>
                             </div>
-                            <a href="#" class="room-price">$1,200,000</a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <!-- feature -->
-                    <div class="feature-item">
-                        <div class="feature-pic set-bg" data-setbg="img/feature/2.jpg">
-                            <div class="sale-notic">FOR SALE</div>
-                        </div>
-                        <div class="feature-text">
-                            <div class="text-center feature-title">
-                                <h5>305 North Palm Drive</h5>
-                                <p><i class="fa fa-map-marker"></i> Beverly Hills, CA 90210</p>
-                            </div>
-                            <div class="room-info-warp">
-                                <div class="room-info">
-                                    <div class="rf-left">
-                                        <p><i class="fa fa-th-large"></i> 1500 Square foot</p>
-                                        <p><i class="fa fa-bed"></i> 16 Bedrooms</p>
-                                    </div>
-                                    <div class="rf-right">
-                                        <p><i class="fa fa-car"></i> 2 Garages</p>
-                                        <p><i class="fa fa-bath"></i> 8 Bathrooms</p>
-                                    </div>  
-                                </div>
-                                <div class="room-info">
-                                    <div class="rf-left">
-                                        <p><i class="fa fa-user"></i> Gina Wesley</p>
-                                    </div>
-                                    <div class="rf-right">
-                                        <p><i class="fa fa-clock-o"></i> 1 days ago</p>
-                                    </div>  
-                                </div>
-                            </div>
-                            <a href="#" class="room-price">$4,500,000</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <!-- feature -->
-                    <div class="feature-item">
-                        <div class="feature-pic set-bg" data-setbg="img/feature/3.jpg">
-                            <div class="rent-notic">FOR Rent</div>
-                        </div>
-                        <div class="feature-text">
-                            <div class="text-center feature-title">
-                                <h5>305 North Palm Drive</h5>
-                                <p><i class="fa fa-map-marker"></i> Beverly Hills, CA 90210</p>
-                            </div>
-                            <div class="room-info-warp">
-                                <div class="room-info">
-                                    <div class="rf-left">
-                                        <p><i class="fa fa-th-large"></i> 1500 Square foot</p>
-                                        <p><i class="fa fa-bed"></i> 16 Bedrooms</p>
-                                    </div>
-                                    <div class="rf-right">
-                                        <p><i class="fa fa-car"></i> 2 Garages</p>
-                                        <p><i class="fa fa-bath"></i> 8 Bathrooms</p>
-                                    </div>  
-                                </div>
-                                <div class="room-info">
-                                    <div class="rf-left">
-                                        <p><i class="fa fa-user"></i> Gina Wesley</p>
-                                    </div>
-                                    <div class="rf-right">
-                                        <p><i class="fa fa-clock-o"></i> 1 days ago</p>
-                                    </div>  
-                                </div>
-                            </div>
-                            <a href="#" class="room-price">$2,500/month</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

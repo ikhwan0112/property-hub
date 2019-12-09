@@ -40,8 +40,33 @@
 			<td>{{$property->status}}</td>
 			<td>
 				<div>
+<<<<<<< Updated upstream
 					<a href=" {{ route('details.create', $property->id) }}" class="btn btn-success">Add Details</a>
 					<a href=" {{ route('details.index', $property->id) }}" class="btn btn-success">View Details</a>
+=======
+					@if($property->detail_id != null)
+						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success disabled">Add Details</a>
+					@else
+						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success " >Add Details</a>
+					@endif
+					<a href="/details/{{ $property->detail_id }}/edit" class="btn btn-success">Edit Details</a>
+				</div>
+				<br>
+				<div>
+					<form class="" action="{{route('properties.destroy',$property->id)}}" method="post">
+						<a class="btn btn-primary" href="{{route('properties.edit', $property->id)}}">Edit</a>
+
+						@if($property->detail_id !=null)
+						<a class="btn btn-warning" href="{{ url('/property/detail',['idD' => $property->detail_id]) }}">Show</a>
+						@else
+						<a class="btn btn-warning disabled" href="{{ url('/property/detail',['idD' => $property->detail_id]) }}">Show</a>
+						@endif
+						
+						@csrf
+						@method('DELETE')
+						<button type="submit" class="btn btn-danger">Delete</button>
+					</form>
+>>>>>>> Stashed changes
 				</div>
 			</td>
 			<td>

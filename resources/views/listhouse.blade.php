@@ -230,6 +230,7 @@
 							<a href="#" class="room-price">$2,500/month</a>
 						</div>
 					</div>
+<<<<<<< Updated upstream
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<!-- feature -->
@@ -342,6 +343,11 @@
 				<a href="#">2</a>
 				<a href="#">3</a>
 				<a href="#"><i class="fa fa-angle-right"></i></a>
+=======
+
+					@endif
+				@endforeach
+>>>>>>> Stashed changes
 			</div>
 		</div>
 	</section>

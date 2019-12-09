@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
+<<<<<<< Updated upstream
 Route::get('/singlehouse', 'PropertiesController@show');
 Route::get('/listhouse', 'PropertiesController@index');
 Route::get('/welcome', 'UsersController@is_admin');
@@ -42,6 +43,15 @@ Route::get('user/add_property', 'PropertiesController@show');
 Route::get('user/user_report', 'PropertiesController@create');
 
 Route::get('admin/list', 'UsersController@list');
+=======
+Route::get('/singlehouse/{idProp}', ['uses' => 'PropertiesController@singlehouse']);
+Route::get('/listhouse', 'PropertiesController@listhouse');
+Route::get('/', 'PropertiesController@welcomeHouse');
+Route::get('/detail/create/{id}', ['uses' => 'DetailsController@createDetail']);
+Route::get('/property/detail/{idP}', ['uses' => 'PropertiesController@showFull']);
+Route::get('listhouse',['uses'=>'PropertiesController@search']);
+
+>>>>>>> Stashed changes
 
 Route::post('users/{users}', 'UsersController@update');
 Route::post('properties/{id}', 'PropertiesController@update');

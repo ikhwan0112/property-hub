@@ -63,6 +63,19 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="">View Report</a>
                             </li>
+<<<<<<< Updated upstream
+=======
+                            @if (Auth::user()->is_admin == 'admin'|| 'superadmin')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/create">Add Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reports">View Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/report">Admin List</a>
+                                </li>
+>>>>>>> Stashed changes
                             @else
                             <li class="nav-item">
                                 <a class="nav-link" href="/properties">Add Properties</a>

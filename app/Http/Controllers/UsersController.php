@@ -33,8 +33,16 @@ class UsersController extends Controller
         return view('admin/view_report');
 =======
         foreach($user as $role){
+<<<<<<< Updated upstream
             if($role->is_admin == 'admin'){
                 $properties = Property::all();
+=======
+            if($role->is_admin == 'admin'|| 'superadmin'){
+                $properties = DB::table('users')
+                    ->join('properties', 'users.id', '=', 'properties.user_id')
+                    ->select('properties.picture', 'description', 'address', 'price', 'status', 'name')
+                    ->get();
+>>>>>>> Stashed changes
 
                 return view('admin.index', compact('properties'));
             }else{
@@ -75,7 +83,8 @@ class UsersController extends Controller
             ]);
 
             if($admin){
-                return redirect()->route('admin.index');
+                return redirect()->route('users.index');
+                //return view('admin.index');
             }
         }
 >>>>>>> Stashed changes
@@ -165,7 +174,7 @@ class UsersController extends Controller
             return redirect()->route('users.index')->with('success', 'User deleted Successfully');
         }
         
-        return back()->withInput()->with('errors', 'Property could not be deleted');
+        return back()->withInput()->with('errors', 'User could not be deleted');
     }
 
     public function is_admin()

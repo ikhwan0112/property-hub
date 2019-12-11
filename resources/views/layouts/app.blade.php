@@ -23,11 +23,11 @@
 
     <style>
         .avatar-picture {
-            width: 21%;
-            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-size: cover;
+            background-position: top center;
             border-radius: 50%;
-            left: -21%;
-            top: 10%;
         }
 
         .user-space {
@@ -64,10 +64,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/">Home</a>
                             </li>
-                            @if (Auth::user()->is_admin == 'admin')
+                            @if (Auth::user()->is_admin == 'superadmin')
                                 <li class="nav-item">
                                     <a class="nav-link" href="/users/create">Add Admin</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reports">View Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/report">Admin List</a>
+                                </li>
+                            @elseif(Auth::user()->is_admin == 'admin')
                                 <li class="nav-item">
                                     <a class="nav-link" href="/reports">View Report</a>
                                 </li>

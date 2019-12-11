@@ -5,7 +5,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-10">
-			<h3>List of Properties</h3>
+			<h3>List of Reports</h3>
 		</div>
 	</div>
 
@@ -15,13 +15,15 @@
 			<td>From</td>
 			<td>Complaint</td>
 		</tr>
+		@foreach ($reports as $no => $report)
 		<tr>
-			@foreach ($report as $reports)
-				<td>{{ $reports->id }}</td>
-				<td>{{ $reports->user_id }}</td>
-				<td>{{ $reports-> description }}</td>
-			@endforeach
+			
+				<td>{{ $no + 1 }}</td>
+				<td>{{ $report->name }}</td>
+				<td>{{ $report->description }}</td>
+			
 		</tr>
+		@endforeach
 	</table>
 </div>
 @endsection

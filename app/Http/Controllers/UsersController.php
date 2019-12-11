@@ -23,10 +23,10 @@ class UsersController extends Controller
         $user = User::select('is_admin')->where('id', $id)->get();
 
         foreach($user as $role){
-            if($role->is_admin == 'admin'){
+            if($role->is_admin == 'admin' || 'superadmin'){
                 $properties = DB::table('users')
                     ->join('properties', 'users.id', '=', 'properties.user_id')
-                    ->select('properties.picture', 'description', 'address', 'price', 'status', 'name')
+                    ->select('properties.picture', 'description', 'address', 'price', 'status', 'name', 'properties.id')
                     ->get();
 
                 return view('admin.index', compact('properties'));
@@ -65,14 +65,16 @@ class UsersController extends Controller
                 'name' => $request->input('inputNameAdmin'),
                 'password' => Hash::make($request->input('inputPasswd')),
                 'email' => $request->input('inputEmail'),
-                'phone_no' => $request->input('inputPhoneNumber'),
+                'phone_no' => '+6' . $request->input('inputPhoneNumber'),
                 'is_admin' => $request->input('inputRole'),
             ]);
 
             if($admin){
-                return redirect()->route('admin.index');
+                return redirect()->route('users.index')->with('success','New admin successfuly addded');
             }
         }
+        
+        return redirect()->route('users.index')->with('failed','Add Admin Error');
     }
 
     /**
@@ -116,7 +118,7 @@ class UsersController extends Controller
             $filename = time() . '.' . $picture->getClientOriginalExtension();
             Image::make($picture)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
 
-            if(Auth::user()->is_admin == 'admin'){
+            if(Auth::user()->is_admin == 'admin' || 'superadmin'){
                 $users->name = $request->input('updateName');
                 $users->phone_no = $request->input('updatePhoneNumber');
                 $users->email = $request->input('updateEmail');
@@ -139,7 +141,7 @@ class UsersController extends Controller
                 }
             }
         }else{
-            if(Auth::user()->is_admin == 'admin'){
+            if(Auth::user()->is_admin == 'admin' || 'superadmin'){
                 $users->name = $request->input('updateName');
                 $users->phone_no = $request->input('updatePhoneNumber');
                 $users->email = $request->input('updateEmail');
@@ -173,9 +175,24 @@ class UsersController extends Controller
         $finduser = User::find( $user->id );
 
         if($finduser->delete()){
-            return redirect()->route('users.index')->with('success', 'User deleted Successfully');
+            return redirect()->route('users.index')->with('success', 'Admin deleted Successfully');
         }
         
-        return back()->withInput()->with('errors', 'Property could not be deleted');
+        return back()->withInput()->with('errors', 'Admin could not be deleted');
     }
+
+    public function list()
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('is_admin', 'user')->get();
+        foreach($user as $list){
+            if($list->is_admin == 'user'){
+                $users = User::all();
+                return view('admin.list', compact('users'));
+            }else{
+                return view('user.index');
+            }
+        }
+    }
+
 }

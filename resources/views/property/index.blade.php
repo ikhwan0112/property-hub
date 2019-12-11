@@ -2,6 +2,25 @@
 @section('content')
 
 <div class="container">
+
+	@if(session()->has('success'))
+		<div class="alert alert-dismissable alert-success">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>
+				{!! session()->get('success') !!}
+			</strong>
+		</div>
+	@elseif(isset($errors) && count($errors) > 0)
+		<div class="alert alert-dismissable alert-danger">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<li><strong>{!! $errors !!}</strong></li>
+		</div>
+	@endif
+
 	<div class="row">
 		<div class="col-md-10">
 			<h3>List of Properties</h3>
@@ -10,12 +29,6 @@
 			<a class="btn btn-sm btn-success" href="{{ route('properties.create') }}"> Enter new property</a>
 		</div>
 	</div>
-
-	@if ($message = Session::get('success'))
-	<div class="alert alert-success">
-		<p>{{$message}}</p>
-	</div>
-	@endif
 
 	<table class="table table-hover table-sm">
 		<tr>
@@ -37,18 +50,28 @@
 			<td>{{$property->status}}</td>
 			<td>
 				<div>
-					@if($check)
+					@if($property->detail_id != null)
 						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success disabled">Add Details</a>
 					@else
 						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success" >Add Details</a>
 					@endif
-					<a href="/details/{{ $property->detail_id }}/edit" class="btn btn-success">Edit Details</a>
+					@if($property->detail_id == null)
+						<a href="/details/{{ $property->detail_id }}/edit" class="btn btn-success disabled">Edit Details</a>
+					@else
+						<a href=" {{ url('/detail/create', ['id' => $property->id]) }}" class="btn btn-success" >Edit Details</a>
+					@endif
 				</div>
 				<br>
 				<div>
 					<form class="" action="{{route('properties.destroy',$property->id)}}" method="post">
 						<a class="btn btn-primary" href="{{route('properties.edit', $property->id)}}">Edit</a>
-						<a class="btn btn-warning" href="{{route('properties.show', $property->id)}}">Show</a>
+
+						@if($property->detail_id !=null)
+							<a class="btn btn-warning" href="{{ url('/property/detail',['idD' => $property->detail_id]) }}">Show</a>
+						@else
+							<a class="btn btn-warning disabled" href="{{ url('/property/detail',['idD' => $property->detail_id]) }}">Show</a>
+						@endif
+
 						@csrf
 						@method('DELETE')
 						<button type="submit" class="btn btn-danger">Delete</button>

@@ -107,7 +107,9 @@
                                 @auth
                                 
                                 @foreach ($user as $role)
-                                    @if ($role->is_admin == 'admin')
+                                    @if ($role->is_admin == 'superadmin')
+                                        <a href="/users"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+                                    @elseif ($role->is_admin == 'admin')
                                         <a href="/users"><i class="fa fa-user-circle-o"></i> Dashboard</a>
                                     @else
                                         <a href="/properties"><i class="fa fa-user-circle-o"></i>Dashboard</a>
@@ -154,7 +156,7 @@
             <div class="container hero-text text-white">
                 <h2>find your place with our local life style</h2>
                 <p>Search real estate property records, houses, condos, land and more on propertyhub.com®.<br>Find property info from the most comprehensive source data.</p>
-                <a href="#" class="site-btn">VIEW DETAIL</a>
+                <a href="{{ url('/listhouse') }}" class="site-btn">VIEW DETAIL</a>
             </div>
         </section>
         <!-- Hero section end -->
@@ -163,15 +165,11 @@
     <!-- Filter form section -->
     <div class="filter-search">
         <div class="container">
-            <form class="filter-form">
-                <input type="text" placeholder="Enter a street name, address number or keyword">
-                <select>
-                    <option value="City">City</option>
-                </select>
-                <select>
-                    <option value="City">State</option>
-                </select>
-                <button class="site-btn fs-submit">SEARCH</button>
+            <form class="filter-form" action="/listhouse" method="get">
+                <center>
+                    <input type="text" name="search" placeholder="Enter a street name, address number or keyword">
+                    <button class="site-btn fs-submit">SEARCH</button>
+                </center>
             </form>
         </div>
     </div>
@@ -194,7 +192,7 @@
                             </div>
                             <div class="feature-text">
                                 <div class="text-center feature-title">
-                                    <h5>{{ $property->address }}</h5>
+                                    <h5 style="margin: 5%">{{ $property->address }}</h5>
                                 </div>
                                 <div class="room-info-warp">
                                     <div class="room-info">

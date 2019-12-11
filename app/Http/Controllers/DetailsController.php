@@ -109,6 +109,8 @@ class DetailsController extends Controller
 
         if($detailUpdate){
             return redirect()->route('property.index')->with('success', 'Detail Property Updated Successfully');
+        }else{
+            return redirect()->route('property.index')->with('errors', 'Detail Property Updated Successfully');
         }
     }
 

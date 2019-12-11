@@ -16,7 +16,14 @@
                     <ul class="list-group">
                         @foreach($admin as $adminuser)
                             <li class="list-group-item text-left"><a href="/users/{{ $adminuser->id }}">{{ $adminuser->name }}</a>
-                            <button type="button" class="btn btn-danger btn-sm float-right">Delete</button></li>
+                            @if (Auth::user()->is_admin == 'superadmin')
+                                <form action="{{route('users.destroy',$adminuser->id)}}" method="post" style="border:none;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm float-right" style="margin-top:-25px">Delete</button>
+                                </form>
+                            </li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>

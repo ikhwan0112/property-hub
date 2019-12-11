@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Property;
 use App\User;
+use App\Detail;
 use DB;
 use Auth;
 use Image;
@@ -19,8 +20,7 @@ class PropertiesController extends Controller
     public function index()
     {
         $properties = Property::where('user_id', Auth::id())->get();
-        $check = Property::whereNotNull('detail_id');
-        return view('property.index', compact('properties', 'check'));
+        return view('property.index', compact('properties'));
     }
 
     /**
@@ -145,9 +145,13 @@ class PropertiesController extends Controller
     public function destroy(Property $property)
     {
         $findproperty = Property::find( $property->id );
+        $findDetail = Detail::find( $property->detail_id );
+        $role = Auth::user()->is_admin;
 
-        if($findproperty->delete()){
+        if($findproperty->delete() && $findDetail->delete() && $role == 'user'){
             return redirect()->route('properties.index')->with('success', 'Property deleted Successfully');
+        }else{
+            return redirect()->route('users.index')->with('success', 'Property deleted Successfully');
         }
         
         return back()->withInput()->with('errors', 'Property could not be deleted');
@@ -180,6 +184,7 @@ class PropertiesController extends Controller
 
         return view('singlehouse', compact('user', 'properties'));
     }
+
     public function welcomeHouse()
     {
         $id = Auth::id();
@@ -193,5 +198,29 @@ class PropertiesController extends Controller
                     ->get();
 
         return view('welcome', compact('user', 'properties'));
+    }
+
+    public function showFull($idP)
+    {
+        $properties = DB::table('properties')
+                    ->join('details', 'details.id', '=', 'properties.detail_id')
+                    ->select('properties.picture', 'price', 'type', 'bedroom', 'bathroom', 'area', 'address', 'description', 'lat', 'lng', 'address','status','facility')
+                    ->where('details.id', $idP)
+                    ->get();
+        return view('property.detail',compact('properties'));
+    }
+
+    public function search(Request $request)
+    {
+        $id = Auth::id();
+        $user = User::select('is_admin')->where('id', $id)->get();
+        
+        $search = $request->get('search');
+        $properties = DB::table('properties')
+                    ->join('users', 'users.id', '=', 'properties.user_id')
+                    ->join('details', 'details.id', '=', 'properties.detail_id')
+                    ->select('name', 'price', 'address', 'properties.picture','status', 'properties.id', 'bedroom', 'area', 'bathroom')
+                    -> where('address','LIKE' ,'%'. $search .'%')->get();
+        return view('listhouse', compact('user', 'properties'));        
     }
 }

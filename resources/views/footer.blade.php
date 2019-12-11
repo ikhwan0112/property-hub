@@ -50,8 +50,8 @@
             <div class="footer-bottom">
                 <div class="footer-nav">
                     <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Featured Listing</a></li>
+                        <li><a href="{{ url('/') }}">Home</a></li>
+                        <li><a href="{{ url('/listhouse') }}">Featured Listing</a></li>
                     </ul>
                 </div>
                 <div class="copyright">

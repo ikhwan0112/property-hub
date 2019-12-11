@@ -24,6 +24,8 @@ Route::get('/singlehouse/{idProp}', ['uses' => 'PropertiesController@singlehouse
 Route::get('/listhouse', 'PropertiesController@listhouse');
 Route::get('/', 'PropertiesController@welcomeHouse');
 Route::get('/detail/create/{id}', ['uses' => 'DetailsController@createDetail']);
+Route::get('/property/detail/{idP}', ['uses' => 'PropertiesController@showFull']);
+Route::get('/listhouse', ['uses'=>'PropertiesController@search']);
 
 Route::get('/users/report', 'UsersController@adminList');
 Route::post('users/{users}', 'UsersController@update');

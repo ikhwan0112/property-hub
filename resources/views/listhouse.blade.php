@@ -69,7 +69,9 @@
 							@auth
 							
 							@foreach ($user as $role)
-								@if ($role->is_admin == 'admin')
+								@if ($role->is_admin == 'superadmin')
+									<a href="/users"><i class="fa fa-user-circle-o"></i> Dashboard</a>
+								@elseif ($role->is_admin == 'admin')
 									<a href="/users"><i class="fa fa-user-circle-o"></i> Dashboard</a>
 								@else
 									<a href="/properties"><i class="fa fa-user-circle-o"></i>Dashboard</a>
@@ -127,7 +129,6 @@
 		</div>
 	</div>
 
-
 	<!-- page -->
 	<section class="page-section categories-page">
 		<div class="container">
@@ -142,7 +143,7 @@
 								</div>
 								<div class="feature-text">
 									<div class="text-center feature-title">
-										<h5>{{ $property->address }}</h5>
+										<h5 style="margin: 5%">{{ $property->address }}</h5>
 										
 										{{-- <p><i class="fa fa-map-marker"></i> Los Angeles, CA 90034</p> --}}
 									</div>

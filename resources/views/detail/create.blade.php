@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="col-sm-4">
 		<div class="col-lg-12">
-			<h3>New Properties</h3>
+			<h3>New Property Detail</h3>
 		</div>
 	</div>
 	<br>

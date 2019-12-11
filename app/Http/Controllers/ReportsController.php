@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Report;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
@@ -15,8 +16,11 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $report = Report::all();
-        return view('report.index', compact('report'));
+        $reports = DB::table('reports')
+                ->join('users', 'reports.user_id', '=', 'users.id')
+                ->select('users.name', 'description')
+                ->get();
+        return view('report.index', compact('reports'));
     }
 
     /**
@@ -43,7 +47,7 @@ class ReportsController extends Controller
                 'user_id' => Auth::id()
             ]);
             if($report){
-                return redirect()->route('properties.index');
+                return redirect()->route('properties.index')->with('success','New Report Successfuly Added');
             }
         }
     }

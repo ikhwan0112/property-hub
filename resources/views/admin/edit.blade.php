@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h3>Edit Admin</h3>
+            <h3>Edit Profile</h3>
         </div>
     </div>
 

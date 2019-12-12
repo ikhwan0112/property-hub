@@ -97,7 +97,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="site-navbar">
-						<a href="#" class="site-logo"><img src="img/logo.png" alt=""></a> {{-- Logo --}}
+						<a href="#" class="site-logo"><img src="images/logo.png" style="width:30%;"></a> {{-- Logo --}}
 						<div class="nav-switch">
 							<i class="fa fa-bars"></i>
 						</div>

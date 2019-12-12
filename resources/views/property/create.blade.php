@@ -8,14 +8,12 @@
 	</div>
 
 	@if ($errors->any())
-	<div class="alert alert-danger">
-		<strong>There are some problems with your input<br></strong>
-		<ul>
-			@foreach ($errors as $error)
-			<li>{{$error}}</li>
-			@endforeach
-		</ul>
-	</div>
+	<div class="alert alert-dismissable alert-danger">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Error when adding property</strong>
+		</div>
 	@endif
 
 	<form class="forms-sample" action="{{ route('properties.store') }}" method="post" enctype="multipart/form-data">

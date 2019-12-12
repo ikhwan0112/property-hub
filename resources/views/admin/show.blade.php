@@ -2,6 +2,7 @@
 @section('content')
 
 <div class="container">
+
     <div class="row">
         <div class="col-md-10">
             <h3>Admin Details</h3>
@@ -20,7 +21,7 @@
                             </div>
                             <div class="col-md-8">
                                 <td>
-                                    <ul class="list-group" style="margin-left: -40%;">
+                                    <ul class="list-group" style="margin-left: -75px;">
                                         <li class="list-group-item text-left">Name: {{ $admin->name }}</li>
                                         <li class="list-group-item text-left">Email: {{ $admin->email }}</li>
                                         <li class="list-group-item text-left">Phone Number: {{ $admin->phone_no }}</li>

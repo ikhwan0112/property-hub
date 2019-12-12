@@ -60,6 +60,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate
+        ([
+            'inputNameAdmin' => 'required',
+            'inputPasswd' => 'required',
+            'inputEmail' => 'required',
+            'inputPhoneNumber' => 'required',
+        ]);
+
         if(Auth::check()){
             $admin = User::create([
                 'name' => $request->input('inputNameAdmin'),
@@ -70,11 +78,9 @@ class UsersController extends Controller
             ]);
 
             if($admin){
-                return redirect()->route('users.index')->with('success','New admin successfuly addded');
+                return redirect()->route('users.create')->with('success','New admin successfuly addded');
             }
         }
-        
-        return redirect()->route('users.index')->with('failed','Add Admin Error');
     }
 
     /**

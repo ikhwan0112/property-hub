@@ -2,6 +2,25 @@
 @section('content')
 
 <div class="container">
+
+	@if(session()->has('success'))
+		<div class="alert alert-dismissable alert-success">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>
+				{!! session()->get('success') !!}
+			</strong>
+		</div>
+	@elseif(isset($errors) && count($errors) > 0)
+		<div class="alert alert-dismissable alert-danger">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Error adding admin</strong>
+		</div>
+	@endif
+
 	<div class="row">
 		<div class="col-md-10">
 			<h3>Add Admin</h3>

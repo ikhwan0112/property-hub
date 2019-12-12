@@ -135,8 +135,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="site-navbar">
-                            {{-- <a href="#" class="site-logo"><img src="img/logo.png" alt=""></a>  --}}
-                            <a href="#" class="site-logo">PropertyHub</a>
+                            <a href="#" class="site-logo"><img src="images/logo.png" style="width:30%;"></a> 
                             <div class="nav-switch">
                                 <i class="fa fa-bars"></i>
                             </div>

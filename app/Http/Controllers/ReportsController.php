@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Report;
 use Auth;
 use DB;
+use Input;
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
@@ -41,11 +42,17 @@ class ReportsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate
+        ([
+            'description' => 'required',
+        ]);
+
         if(Auth::check()){
             $report=Report::create([
                 'description'=> $request->input('report'),
                 'user_id' => Auth::id()
             ]);
+
             if($report){
                 return redirect()->route('properties.index')->with('success','New Report Successfuly Added');
             }

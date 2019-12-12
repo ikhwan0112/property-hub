@@ -7,16 +7,22 @@
 		</div>
 	</div>
 	<br>
-	@if ($errors->any())
-	<div class="alert alert-danger">
-		<strong>There are some problems with your input<br></strong>
-		<ul>
-			@foreach ($errors as $error)
-			<li>{{$error}}</li>
-			@endforeach
-		</ul>
-
-	</div>
+	@if(session()->has('success'))
+		<div class="alert alert-dismissable alert-success">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>
+				{!! session()->get('success') !!}
+			</strong>
+		</div>
+	@elseif(isset($errors) && count($errors) > 0)
+		<div class="alert alert-dismissable alert-danger">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>There are some problems in your input</strong>
+		</div>
 	@endif
 
 	<form class="forms-sample" action="{{ route('details.store') }}" method="post" enctype="multipart/form-data">
